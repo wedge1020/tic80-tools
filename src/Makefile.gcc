@@ -4,17 +4,15 @@ INC =
 CC = gcc
 SRC = $(wildcard *.c)
 BIN = $(SRC:.c=)
-all: gcc
+all: $(SRC) $(BIN)
 
 debug: CFLAGS += -DDEBUG -g
 debug: DEBUG = debug
-debug: gcc
+debug: $(SRC) $(BIN)
 
-gcc:
-	@make -f Makefile.gcc
-
-cscript:
-	@make -f Makefile.cscript
+.c:
+	@mkdir -p ../bin
+	$(CC)  $(INC) -o ../bin/$@ $< $(CFLAGS) $(LIBS)
 
 clean:
 	@rm -vf .*.sw[op] *.save* *~ ../bin/* core errors
